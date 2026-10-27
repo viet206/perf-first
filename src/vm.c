@@ -1,4 +1,4 @@
-#include "neorpn_vm.h"
+#include "vm.h"
 
 #define NEXT \
         ++code.s; \
@@ -18,6 +18,7 @@ int jmp_main(ptr_t code) {
                 [OP_DROP] = &&op_drop,
                 [OP_ADD]  = &&op_add,
                 [OP_SUB]  = &&op_sub,
+		[OP_PRINT] = &&op_print,
                 [OP_EXIT] = &&op_exit
         };
 
@@ -44,7 +45,9 @@ op_add:
 op_sub:
         math(-=)
         NEXT
-
+op_print:
+	put_int(cell[sp]);
+	NEXT
 op_exit:
 	if (sp < 0) return 0;
         return cell[sp];

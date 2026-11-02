@@ -14,7 +14,7 @@ fi
 
 case $OPT in
 	-b)
-		cc -I../src ../src/*.c ../src/hal/hal_libc.c -o nrpn
+		cc -I../src ../src/*.c -O3 -o crm
 		;;
 	*)
 		echo "Error"

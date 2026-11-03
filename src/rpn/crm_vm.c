@@ -9,36 +9,43 @@
 
 #define DEFINE_OP(name,handler) \
 name: { \
+	TRACE_BEFORE; \
 	handler; \
+	TRACE_AFTER; \
 	FETCH; \
 }
 
-#define __math(op) \
+#define __math(opcode) \
 	--sp; \
-	cell[sp] op cell[sp + 1]
+	cell[sp] opcode cell[sp + 1]
 
 int jmp_main(ptr code) {
-		// Init Memory VM
-        _cell cell[5] = {0};
+        _cell cell[128] = {0};
         int sp = -1;
         unsigned int word;
+
+        int pre; // previous result
+        int re; // result
+        int op; // math op
         
         const void* table[] = {
                 [OP_PUSH] = &&op_push,
                 [OP_DROP] = &&op_drop,
                 [OP_ADD] = &&op_add,
                 [OP_SUB] = &&op_sub,
-                [OP_EXIT] = &&op_exit
+                [0xFF] = &&op_exit
         };
 
         word = *code.u; 
         goto *table[word & 0xFF];
 
         DEFINE_OP(op_push,
-        	cell[++sp] = GET_DAT
-        )
+        	++sp;
+        	cell[sp] = GET_DAT
+   		)
 
         DEFINE_OP(op_add,__math(+=))
+        
         DEFINE_OP(op_sub,__math(-=))
         DEFINE_OP(op_drop,--sp)
 op_exit:

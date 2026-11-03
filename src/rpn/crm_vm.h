@@ -1,6 +1,10 @@
 #ifndef CORE_RAW_MACHINE_VM
 #define CORE_RAW_MACHINE_VM
 
+#include "TRACE.h"
+
+#define ENABLE_TRACE 1
+
 #define __VERSION "0.0.3"
 
 /* Công nhận 2 type trong CRM:
@@ -32,7 +36,8 @@ typedef enum {
 	OP_SUB,
 	OP_MUL,
 	OP_DIV,
-	OP_EXIT
+	OP_JNE,
+	OP_EXIT = 0xFF
 }opcode;
 
 typedef unsigned int _u;

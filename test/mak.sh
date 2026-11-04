@@ -14,7 +14,7 @@ fi
 
 case $OPT in
 	-b)
-		cc -I../src/rpn ../src/rpn/*.c -fsanitize=address -O3 -o crm
+		cc -I../src ../src/*.c -O3 -o perff
 		;;
 	*)
 		echo "Error"

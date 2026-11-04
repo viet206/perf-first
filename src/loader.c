@@ -1,13 +1,13 @@
-#include "crm_vm.h"
+#include "pf_VM.h"
 #include <stdio.h>
 
 int main(int argc,char** argv) {
 	if ( argc < 2 ) {
-		printf("Usage : neovm file\n");
+		printf("Usage : %s [file]\n",argv[0]);
 		return 1;
 	}
 	
-    FILE *file = fopen(argv[1], "rb");
+    FILE *file = fopen(argv[1],"rb");
     if (file == NULL) return 1;
     static unsigned char buffer[512] = {0};
     size_t bytesRead = fread(buffer, 1,512, file);
@@ -15,8 +15,6 @@ int main(int argc,char** argv) {
     fclose(file);
 
     ptr i;
-    i.us = buffer;
-    int rt = jmp_main(i);
-
-    return rt;
+    i.uc = buffer;
+    vexec(i);
 }

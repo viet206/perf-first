@@ -2,11 +2,14 @@
 #define PERF_FIRST_VM
 
 typedef enum {
-	S_PUSH,
-	S_DROP,
-	S_ADD,
-	S_SUB,
-	EXIT
+	S_PUSH = 0x00,
+	S_DROP = 0x01,
+	S_ADD = 0x02,
+	S_SUB = 0x03,
+	PRINT = 0x04,
+	JNE = 0x05,
+	JEQ = 0x06,
+	EXIT = 0xFF
 }op;
 
 typedef union {
